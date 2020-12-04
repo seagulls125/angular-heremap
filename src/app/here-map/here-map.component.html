@@ -1,0 +1,69 @@
+<div #map [style.width]="width" [style.height]="height"></div>
+
+<div class="auto-container">
+  <mat-form-field class="full-width">
+    <input matInput placeholder="Search" aria-label="State" [matAutocomplete]="auto" [formControl]="searchAddressCtrl">
+    <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)" [displayWith]="displayFn">
+      <mat-option *ngIf="isLoading" class="is-loading">Loading...</mat-option>
+      <ng-container *ngIf="!isLoading">
+        <mat-option *ngFor="let item of filteredData" [value]="item">
+          <span><b>{{item.label}}</b> ({{item.language}})</span>
+        </mat-option>
+      </ng-container>
+    </mat-autocomplete>
+  </mat-form-field>
+
+  <br>
+
+  <ng-container *ngIf="errorMsg; else elseTemplate">
+    {{errorMsg}}
+  </ng-container>
+  <ng-template #elseTemplate>
+    <h2>Selected Value: {{searchAddressCtrl.value?.label}}</h2>
+    <br>
+    <div>
+      <ng-template [ngIf]="address?.country">
+        <mat-form-field class="full-width">
+          <mat-label>Country</mat-label>
+          <input matInput  value={{address?.country}}>
+        </mat-form-field>
+      </ng-template>
+
+      <ng-template [ngIf]="address?.state">
+        <mat-form-field class="full-width">
+          <mat-label>State</mat-label>
+          <input matInput  value={{address?.state}}>
+        </mat-form-field>
+      </ng-template>
+
+      <ng-template [ngIf]="address?.district">
+        <mat-form-field class="full-width">
+          <mat-label>District</mat-label>
+          <input matInput  value={{address?.district}}>
+        </mat-form-field>
+      </ng-template>
+
+      <ng-template [ngIf]="address?.street">
+        <mat-form-field class="full-width">
+          <mat-label>Street</mat-label>
+          <input matInput  value={{address?.street}}>
+        </mat-form-field>
+      </ng-template>
+
+      <ng-template [ngIf]="address?.city">
+        <mat-form-field class="full-width">
+          <mat-label>City</mat-label>
+          <input matInput  value={{address?.city}}>
+        </mat-form-field>
+      </ng-template>
+      
+      <ng-template [ngIf]="address?.postalCode">
+        <mat-form-field class="full-width">
+          <mat-label>postalCode</mat-label>
+          <input matInput  value={{address?.postalCode}}>
+        </mat-form-field>
+      </ng-template>
+      
+    </div>
+  </ng-template>
+</div>
